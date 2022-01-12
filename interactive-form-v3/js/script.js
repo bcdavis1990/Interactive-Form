@@ -111,12 +111,12 @@ function activityRegistered() {
   const activitySelected = total > 0;
 
   if (activitySelected) {
-    activities.classList.remove("not-valid");
-    activities.classList.add("valid");
+    activities.firstElementChild.classList.remove("not-valid");
+    activities.firstElementChild.classList.add("valid");
     return true;
   } else {
-    activities.classList.remove("valid");
-    activities.classList.add("not-valid");
+    activities.firstElementChild.classList.remove("valid");
+    activities.firstElementChild.classList.add("not-valid");
     event.preventDefault();
     return false;
   }
