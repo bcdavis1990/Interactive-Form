@@ -61,6 +61,16 @@ activities.addEventListener("change", (e) => {
   }
 });
 
+//makes the "Registered Activites" section's focus objects more obvious
+for (let i = 0; i < checkboxes.length; i++) {
+  checkboxes[i].addEventListener("focus", (e) => {
+    e.target.parentElement.classList.add("focus");
+  });
+  checkboxes[i].addEventListener("blur", (e) => {
+    e.target.parentElement.classList.remove("focus");
+  });
+}
+
 //makes credit card the default payment option and hides other fields when other option is selected
 paymentOptions[1].setAttribute("selected", "selected");
 
@@ -113,7 +123,6 @@ function activityRegistered() {
   if (activitySelected) {
     activities.firstElementChild.classList.remove("not-valid");
     activities.firstElementChild.classList.add("valid");
-    return true;
   } else {
     activities.firstElementChild.classList.remove("valid");
     activities.firstElementChild.classList.add("not-valid");
