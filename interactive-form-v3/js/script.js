@@ -5,6 +5,7 @@ const otherJobRole = document.getElementById("other-job-role");
 const shirtColor = document.getElementById("color");
 const shirtDesigns = document.getElementById("shirt-designs");
 const activitiesBox = document.getElementById("activities-box");
+const checkboxes = document.querySelectorAll("[type = 'checkbox']");
 
 const activities = document.getElementById("activities");
 const activitiesCost = document.getElementById("activities-cost");
@@ -16,6 +17,9 @@ const creditCardDiv = document.getElementById("credit-card"); //targets all the 
 
 const button = document.querySelector("button");
 const emailField = document.getElementById("email");
+const creditCard = document.getElementById("cc-num");
+const zipCode = document.getElementById("zip");
+const cvv = document.getElementById("cvv");
 
 nameField.focus(); //applies focus to the name field upon page load
 shirtColor.disabled = true; //disables color field by default
@@ -69,13 +73,20 @@ payment.addEventListener("change", (e) => {
 });
 
 //helper functions for the submit event
+//need to work on not repeating myself so much for these functions
 function nameHelper() {
   const nameValue = nameField.value;
   const alert = document.getElementById("name-hint");
   if (nameValue == "") {
     alert.classList.remove("hint");
+    alert.parentElement.classList.add("not-valid");
     event.preventDefault();
     return false;
+  } else {
+    alert.classList.add("hint");
+    alert.parentElement.classList.remove("not-valid");
+    alert.parentElement.classList.add("valid");
+    return nameValue;
   }
 }
 
@@ -84,9 +95,13 @@ function emailHelper() {
   const alert = document.getElementById("email-hint");
   const validEmail = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
   if (validEmail) {
-    return validEmail;
+    alert.classList.add("hint");
+    alert.parentElement.classList.remove("not-valid");
+    alert.parentElement.classList.add("valid");
+    return emailValue;
   } else {
     alert.classList.remove("hint");
+    alert.parentElement.classList.add("not-valid");
     event.preventDefault();
     return false;
   }
@@ -94,9 +109,67 @@ function emailHelper() {
 
 function activityRegistered() {
   const activitySelected = total > 0;
+
   if (activitySelected) {
-    return activitySelected;
+    activities.classList.remove("not-valid");
+    activities.classList.add("valid");
+    return true;
   } else {
+    activities.classList.remove("valid");
+    activities.classList.add("not-valid");
+    event.preventDefault();
+    return false;
+  }
+  return total;
+}
+
+function cardNumberValid() {
+  const cardValue = creditCard.value;
+  const alert = document.getElementById("cc-hint");
+  const cardValid = /^\d{13,16}$/.test(cardValue);
+  if (cardValid) {
+    alert.classList.add("hint");
+    alert.parentElement.classList.remove("not-valid");
+    alert.parentElement.classList.add("valid");
+    return cardValue;
+  } else {
+    alert.classList.remove("hint");
+    alert.parentElement.classList.add("not-valid");
+    event.preventDefault();
+    return false;
+  }
+}
+
+function zipCodeValid() {
+  const zipValue = zipCode.value;
+  const alert = document.getElementById("zip-hint");
+  const zipVaild = /^\d{5}$/.test(zipValue);
+  if (zipVaild) {
+    alert.classList.add("hint");
+    alert.parentElement.classList.remove("not-valid");
+    alert.parentElement.classList.add("valid");
+    return zipValue;
+  } else {
+    alert.classList.remove("hint");
+    alert.parentElement.classList.add("not-valid");
+    event.preventDefault();
+    return false;
+  }
+}
+
+function cvvValid() {
+  const cvvValue = cvv.value;
+  const alert = document.getElementById("cvv-hint");
+  const cvvValid = /^\d{3}$/.test(cvvValue);
+  if (cvvValid) {
+    alert.classList.add("hint");
+    alert.parentElement.classList.remove("not-valid");
+    alert.parentElement.classList.add("valid");
+    return cvvValue;
+  } else {
+    alert.classList.remove("hint");
+    alert.parentElement.classList.add("not-valid");
+    event.preventDefault();
     return false;
   }
 }
@@ -106,4 +179,17 @@ button.addEventListener("click", (e) => {
   nameHelper();
   emailHelper();
   activityRegistered();
+  cardNumberValid();
+  zipCodeValid();
+  cvvValid();
 });
+
+//makes the "Registered Activites" section's focus objects more obvious
+for (let i = 0; i < checkboxes.length; i++) {
+  checkboxes[i].addEventListener("focus", (e) => {
+    e.target.parentElement.classList.add("focus");
+  });
+  checkboxes[i].addEventListener("blur", (e) => {
+    e.target.parentElement.classList.remove("focus");
+  });
+}
