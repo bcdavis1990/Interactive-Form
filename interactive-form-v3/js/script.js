@@ -14,10 +14,14 @@ let total = 0;
 const payment = document.getElementById("payment");
 const paymentOptions = payment.children;
 const creditCardDiv = document.getElementById("credit-card"); //targets all the credit card selection elements
+const payPal = document.getElementById("paypal");
+const bitcoin = document.getElementById("bitcoin");
 
 const button = document.querySelector("button");
 const emailField = document.getElementById("email");
 const creditCard = document.getElementById("cc-num");
+const expMonth = document.getElementById("exp-month");
+const expYear = document.getElementById("exp-year");
 const zipCode = document.getElementById("zip");
 const cvv = document.getElementById("cvv");
 
@@ -74,11 +78,35 @@ for (let i = 0; i < checkboxes.length; i++) {
 //makes credit card the default payment option and hides other fields when other option is selected
 paymentOptions[1].setAttribute("selected", "selected");
 
+//hides other payment options on page load
+payPal.style.display = "none";
+bitcoin.style.display = "none";
+
 payment.addEventListener("change", (e) => {
-  if (e.target.value !== "credit-card") {
-    creditCardDiv.style.display = "none";
-  } else {
-    creditCardDiv.style.display = "block";
+  if (e.target.value === "credit-card") {
+    creditCard.parentElement.style.display = "block";
+    expMonth.parentElement.style.display = "block";
+    expYear.parentElement.style.display = "block";
+    zipCode.parentElement.style.display = "block";
+    cvv.parentElement.style.display = "block";
+    bitcoin.style.display = "none";
+    payPal.style.display = "none";
+  } else if (e.target.value === "paypal") {
+    payPal.style.display = "block";
+    creditCard.parentElement.style.display = "none";
+    expMonth.parentElement.style.display = "none";
+    expYear.parentElement.style.display = "none";
+    zipCode.parentElement.style.display = "none";
+    cvv.parentElement.style.display = "none";
+    bitcoin.style.display = "none";
+  } else if (e.target.value === "bitcoin") {
+    bitcoin.style.display = "block";
+    creditCard.parentElement.style.display = "none";
+    expMonth.parentElement.style.display = "none";
+    expYear.parentElement.style.display = "none";
+    zipCode.parentElement.style.display = "none";
+    cvv.parentElement.style.display = "none";
+    payPal.style.display = "none";
   }
 });
 
