@@ -216,9 +216,11 @@ button.addEventListener("click", (e) => {
   nameHelper();
   emailHelper();
   activityRegistered();
-  cardNumberValid();
-  zipCodeValid();
-  cvvValid();
+  if (paymentOptions[1].selected) {
+    cardNumberValid();
+    zipCodeValid();
+    cvvValid();
+  }
 });
 
 //makes the "Registered Activites" section's focus objects more obvious
